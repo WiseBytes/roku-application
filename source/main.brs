@@ -27,6 +27,17 @@ sub main()
  screen.DrawText("Search", 64, 344, &HFFFFFFFF, sansFont) 
  screen.DrawText("My Account", 64, 407, &HFFFFFFFF, sansFont) 
  
+ a_url = [ 
+                "http://www.christiancinema.com/catalog/images/3daytest_lg.jpg",
+ 				"http://www.christiancinema.com/catalog/images/christmassnow_spanish_lg.jpg",
+ 				"http://www.christiancinema.com/catalog/images/changetheheart_lg.jpg",
+ 				"http://www.christiancinema.com/catalog/images/brotherwhite_lg.jpg",
+ 				"http://www.christiancinema.com/catalog/images/courageous_dvd_lg.jpg",
+ 				"http://www.christiancinema.com/catalog/images/hiddenrage_dvd_lg.jpg"
+ 		 ]
+ 				
+ fetched_bitmaps = FetchBitmaps(a_url)
+
  ' Draw Movie Posters
  current_movie = 0
  poster_columns = 3
@@ -39,36 +50,8 @@ sub main()
  l_x = 366
  l_y = 220
  
- poster6 = CreateObject("roBitmap", "http://www.christiancinema.com/catalog/images/hiddenrage_dvd_lg.jpg")
- 
- http = NewHttp2("http://www.christiancinema.com/catalog/images/3daytest_lg.jpg", "text/xml")
- http.GetToFileWithTimeout("tmp:/3daytest_lg.jpg", 120)
- poster1 = CreateObject("roBitmap", "tmp:/3daytest_lg.jpg")
- 
- http = NewHttp2("http://www.christiancinema.com/catalog/images/christmassnow_spanish_lg.jpg", "text/xml")
- http.GetToFileWithTimeout("tmp:/christmassnow_spanish_lg.jpg", 120)
- poster2 = CreateObject("roBitmap", "tmp:/christmassnow_spanish_lg.jpg")
- 
- http = NewHttp2("http://www.christiancinema.com/catalog/images/changetheheart_lg.jpg", "text/xml")
- http.GetToFileWithTimeout("tmp:/changetheheart_lg.jpg", 120)
- poster3 = CreateObject("roBitmap", "tmp:/changetheheart_lg.jpg")
- 
- http = NewHttp2("http://www.christiancinema.com/catalog/images/brotherwhite_lg.jpg", "text/xml")
- http.GetToFileWithTimeout("tmp:/brotherwhite_lg.jpg", 120)
- poster4 = CreateObject("roBitmap", "tmp:/brotherwhite_lg.jpg")
- 
- http = NewHttp2("http://www.christiancinema.com/catalog/images/courageous_dvd_lg.jpg", "text/xml")
- http.GetToFileWithTimeout("tmp:/courageous_dvd_lg.jpg", 120)
- poster5 = CreateObject("roBitmap", "tmp:/courageous_dvd_lg.jpg")
- 
- http = NewHttp2("http://www.christiancinema.com/catalog/images/hiddenrage_dvd_lg.jpg", "text/xml")
- http.GetToFileWithTimeout("tmp:/hiddenrage_dvd_lg.jpg", 120)
- poster6 = CreateObject("roBitmap", "tmp:/hiddenrage_dvd_lg.jpg")
- 
- posterArray = [poster1, poster2, poster3, poster4, poster5, poster6]
- 
- For each bitmap in posterArray
-   screen.DrawScaledObject( l_x, l_y, 0.75, 0.75, bitmap )
+ For each bitmap in fetched_bitmaps
+   screen.DrawScaledObject( l_x, l_y, 0.75, 0.75, bitmap.Bitmap )
    l_x = l_x + l_width
    current_movie = current_movie + 1
    if (current_movie = poster_columns)
